@@ -116,9 +116,9 @@ module RailsParam
       options.each do |key, value|
         case key
           when :required
-            raise InvalidParameterError, "Parameter #{key} is required" if value && param.nil?
+            raise InvalidParameterError, "Parameter #{param} is required" if value && param.nil?
           when :blank
-            raise InvalidParameterError, "Parameter #{key} cannot be blank" if !value && case param
+            raise InvalidParameterError, "Parameter #{param} cannot be blank" if !value && case param
                                                                                     when String
                                                                                       !(/\S/ === param)
                                                                                     when Array, Hash
@@ -127,25 +127,25 @@ module RailsParam
                                                                                       param.nil?
                                                                                   end
           when :format
-            raise InvalidParameterError, "Parameter #{key} must be a string if using the format validation" unless param.kind_of?(String)
-            raise InvalidParameterError, "Parameter #{key} must match format #{value}" unless param =~ value
+            raise InvalidParameterError, "Parameter #{param} must be a string if using the format validation" unless param.kind_of?(String)
+            raise InvalidParameterError, "Parameter #{param} must match format #{value}" unless param =~ value
           when :is
-            raise InvalidParameterError, "Parameter #{key} must be #{value}" unless param === value
+            raise InvalidParameterError, "Parameter #{param} must be #{value}" unless param === value
           when :in, :within, :range
-            raise InvalidParameterError, "Parameter #{key} must be within #{value}" unless param.nil? || case value
+            raise InvalidParameterError, "Parameter #{param} must be within #{value}" unless param.nil? || case value
                                                                                                     when Range
                                                                                                       value.include?(param)
                                                                                                     else
                                                                                                       Array(value).include?(param)
                                                                                                   end
           when :min
-            raise InvalidParameterError, "Parameter #{key} cannot be less than #{value}" unless param.nil? || value <= param
+            raise InvalidParameterError, "Parameter #{param} cannot be less than #{value}" unless param.nil? || value <= param
           when :max
-            raise InvalidParameterError, "Parameter #{key} cannot be greater than #{value}" unless param.nil? || value >= param
+            raise InvalidParameterError, "Parameter #{param} cannot be greater than #{value}" unless param.nil? || value >= param
           when :min_length
-            raise InvalidParameterError, "Parameter #{key} cannot have length less than #{value}" unless param.nil? || value <= param.length
+            raise InvalidParameterError, "Parameter #{param} cannot have length less than #{value}" unless param.nil? || value <= param.length
           when :max_length
-            raise InvalidParameterError, "Parameter #{key} cannot have length greater than #{value}" unless param.nil? || value >= param.length
+            raise InvalidParameterError, "Parameter #{param} cannot have length greater than #{value}" unless param.nil? || value >= param.length
         end
       end
     end
